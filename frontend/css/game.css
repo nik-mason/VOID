@@ -1,0 +1,506 @@
+:root {
+    --primary: #f425af;
+    --cyber-blue: #00f3ff;
+    --cyber-purple: #9d00ff;
+    --neon-green: #39ff14;
+    --key-height: 80px;
+    --judg-line-pos: 88%;
+}
+
+#playfield {
+    perspective: 1200px;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.02) 0%, rgba(255, 255, 255, 0.05) 100%);
+    box-shadow: 0 0 100px rgba(0, 0, 0, 0.8);
+}
+
+.lane {
+    height: 100%;
+    position: relative;
+}
+
+/* Flashy Lane Beam */
+.lane-beam {
+    position: absolute;
+    bottom: calc(100% - var(--judg-line-pos));
+    left: 0;
+    right: 0;
+    top: 100%;
+    background: linear-gradient(0deg, var(--primary) 0%, transparent 100%);
+    filter: blur(8px);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.05s, top 0.1s ease-out;
+}
+
+.lane.active .lane-beam {
+    top: 0;
+    opacity: 0.4;
+}
+
+/* Stunning Note Design with Animated Core */
+.note {
+    position: absolute;
+    width: 25%;
+    height: 48px;
+    z-index: 5;
+    will-change: transform;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.note-inner {
+    width: 94%;
+    height: 100%;
+    border-radius: 8px;
+    /* Slightly rounder */
+    position: relative;
+    box-shadow: 0 0 25px currentColor, inset 0 0 15px rgba(255, 255, 255, 0.4);
+    border: 3px solid rgba(255, 255, 255, 1);
+    background: inherit;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    animation: note-float 1s ease-in-out infinite alternate;
+}
+
+/* Central Animated Core Model */
+.note-inner::before {
+    content: '';
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background: #fff;
+    box-shadow: 0 0 15px #fff, 0 0 30px currentColor;
+    transform: rotate(45deg);
+    z-index: 2;
+    animation: note-core-spin 2s linear infinite;
+    clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+    /* Diamond shape */
+}
+
+/* Internal Glow Scanline */
+.note-inner::after {
+    content: '';
+    position: absolute;
+    inset: -100%;
+    background: linear-gradient(45deg,
+            transparent 45%,
+            rgba(255, 255, 255, 0.8) 50%,
+            transparent 55%);
+    z-index: 1;
+    animation: note-scan 1.5s linear infinite;
+}
+
+@keyframes note-core-spin {
+    0% {
+        transform: rotate(45deg) scale(1);
+        filter: brightness(1);
+    }
+
+    50% {
+        transform: rotate(225deg) scale(1.3);
+        filter: brightness(1.5);
+    }
+
+    100% {
+        transform: rotate(405deg) scale(1);
+        filter: brightness(1);
+    }
+}
+
+@keyframes note-scan {
+    0% {
+        transform: translateX(-50%) translateY(-50%);
+    }
+
+    100% {
+        transform: translateX(50%) translateY(50%);
+    }
+}
+
+@keyframes note-float {
+    0% {
+        transform: scale(1);
+        filter: contrast(1);
+    }
+
+    100% {
+        transform: scale(1.02);
+        filter: contrast(1.1);
+    }
+}
+
+/* Lane Specific Colors - High Vibrancy */
+.note-lane-0 .note-inner,
+.note-lane-3 .note-inner {
+    color: #ffffff;
+    background: linear-gradient(180deg, #ffffff, #888888);
+}
+
+.note-lane-1 .note-inner,
+.note-lane-2 .note-inner {
+    color: var(--cyber-blue);
+    background: linear-gradient(180deg, #00f3ff, #0077ff);
+}
+
+/* Judgment Line Redesign */
+#judgment-line {
+    position: absolute;
+    top: var(--judg-line-pos);
+    left: 0;
+    right: 0;
+    height: 4px;
+    /* Thicker */
+    background: #fff;
+    box-shadow:
+        0 0 10px #fff,
+        0 0 20px var(--primary),
+        0 0 40px var(--primary);
+    z-index: 20;
+}
+
+#judgment-line::before,
+#judgment-line::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: var(--primary);
+    opacity: 0.5;
+}
+
+#judgment-line::before {
+    top: -10px;
+}
+
+#judgment-line::after {
+    bottom: -10px;
+}
+
+/* Long Note Styles */
+.note.long-note {
+    overflow: visible;
+}
+
+.note-body {
+    position: absolute;
+    bottom: 0;
+    /* Align with bottom of head */
+    left: 8px;
+    right: 8px;
+    z-index: -1;
+    border-radius: 4px 4px 0 0;
+    opacity: 0.5;
+    transform-origin: bottom;
+    background-image: repeating-linear-gradient(0deg, transparent, transparent 10px, rgba(255, 255, 255, 0.1) 10px, rgba(255, 255, 255, 0.1) 20px);
+}
+
+.note.holding .note-body {
+    opacity: 0.9;
+    filter: brightness(1.5);
+    box-shadow: 0 0 30px currentColor;
+}
+
+/* 3D Key Objects */
+.key-object {
+    width: 85%;
+    height: var(--key-height);
+    position: relative;
+    transform-style: preserve-3d;
+    transition: transform 0.08s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.key-top {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, #222, #000);
+    border: 2px solid rgba(255, 255, 255, 0.15);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    font-weight: 900;
+    color: rgba(255, 255, 255, 0.4);
+    border-radius: 10px;
+    transform: translateZ(12px);
+    transition: all 0.1s;
+}
+
+.key-side {
+    position: absolute;
+    bottom: -12px;
+    left: 0;
+    right: 0;
+    height: 24px;
+    background: #000;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 0 0 10px 10px;
+}
+
+.key-object.pressed {
+    transform: translateY(18px);
+}
+
+/* Lane Specific Press Glows */
+.key-object.pressed.glow-white .key-top {
+    background: white;
+    color: black;
+    box-shadow: 0 0 40px rgba(255, 255, 255, 0.8), inset 0 0 15px rgba(0, 0, 0, 0.2);
+    border-color: #eee;
+    transform: translateZ(2px);
+}
+
+.key-object.pressed.glow-cyan .key-top {
+    background: var(--cyber-blue);
+    color: black;
+    box-shadow: 0 0 40px rgba(0, 243, 255, 0.8), inset 0 0 15px rgba(0, 0, 0, 0.2);
+    border-color: #fff;
+    transform: translateZ(2px);
+}
+
+/* Particle Styles */
+.particle {
+    position: absolute;
+    pointer-events: none;
+    z-index: 100;
+    border-radius: 50%;
+}
+
+.blast-ring {
+    position: absolute;
+    border: 8px solid white;
+    border-radius: 50%;
+    pointer-events: none;
+    transform: translate(-50%, -50%) scale(0);
+    z-index: 90;
+}
+
+@keyframes blast-bloom {
+    0% {
+        transform: translate(-50%, -50%) scale(0);
+        opacity: 1;
+        border-width: 20px;
+    }
+
+    100% {
+        transform: translate(-50%, -50%) scale(4);
+        opacity: 0;
+        border-width: 1px;
+    }
+}
+
+#judgment-line {
+    position: absolute;
+    top: var(--judg-line-pos);
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: white;
+    box-shadow: 0 0 30px rgba(255, 255, 255, 0.5);
+    z-index: 20;
+    transform: translateY(-50%);
+}
+
+#judgment-line .glow {
+    position: absolute;
+    inset: -6px 0;
+    background: var(--primary);
+    filter: blur(12px);
+    opacity: 0.7;
+    animation: pulse-glow 2s infinite;
+}
+
+@keyframes pulse-glow {
+
+    0%,
+    100% {
+        opacity: 0.5;
+    }
+
+    50% {
+        opacity: 0.9;
+    }
+}
+
+#youtube-player {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+@media (min-aspect-ratio: 16/9) {
+    #youtube-player {
+        height: 300%;
+        width: 100%;
+    }
+}
+
+@media (max-aspect-ratio: 16/9) {
+    #youtube-player {
+        width: 300%;
+        height: 100%;
+    }
+}
+
+.neon-text-glow {
+    text-shadow: 0 0 20px var(--primary), 0 0 40px var(--primary);
+}
+
+@keyframes judgment-pop {
+    0% {
+        transform: scale(2.5);
+        opacity: 0;
+        filter: blur(10px);
+    }
+
+    20% {
+        transform: scale(1);
+        opacity: 1;
+        filter: blur(0px);
+    }
+
+    80% {
+        transform: scale(0.95);
+        opacity: 1;
+        filter: blur(0px);
+    }
+
+    100% {
+        transform: scale(1.1);
+        opacity: 0;
+        filter: blur(5px);
+    }
+}
+
+.animate-judgment {
+    animation: judgment-pop 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+/* Perfect Screen Shake */
+.perfect-shake {
+    animation: screen-shake 0.3s cubic-bezier(.36, .07, .19, .97) both;
+}
+
+@keyframes screen-shake {
+
+    10%,
+    90% {
+        transform: translate3d(-2px, -2px, 0);
+    }
+
+    20%,
+    80% {
+        transform: translate3d(4px, 4px, 0);
+    }
+
+    30%,
+    50%,
+    70% {
+        transform: translate3d(-8px, 0, 0);
+    }
+
+    40%,
+    60% {
+        transform: translate3d(8px, 0, 0);
+    }
+}
+
+/* Particle Enhancements */
+.square-particle {
+    border-radius: 2px !important;
+}
+
+.perfect-ring {
+    border-width: 25px !important;
+    box-shadow: 0 0 60px white, inset 0 0 30px white;
+}
+
+/* Perfect Screen Flash */
+.perfect-bg-flash {
+    position: fixed;
+    inset: 0;
+    z-index: 5;
+    pointer-events: none;
+    animation: perfect-flash 0.3s ease-out forwards;
+}
+
+@keyframes perfect-flash {
+    0% {
+        background: rgba(255, 255, 255, 0.4);
+    }
+
+    100% {
+        background: transparent;
+    }
+}
+
+/* Touch Ripple */
+.touch-ripple {
+    position: fixed;
+    width: 80px;
+    height: 80px;
+    background: radial-gradient(circle, rgba(244, 37, 175, 0.4) 0%, transparent 70%);
+    border: 2px solid rgba(244, 37, 175, 0.2);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9999;
+    animation: touch-ripple-anim 0.4s ease-out forwards;
+}
+
+@keyframes touch-ripple-anim {
+    0% {
+        transform: translate(-50%, -50%) scale(0.2);
+        opacity: 1;
+    }
+
+    100% {
+        transform: translate(-50%, -50%) scale(1.5);
+        opacity: 0;
+    }
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 900px) {
+    #playfield {
+        width: 100%;
+        max-width: 600px;
+    }
+
+    #judgment-text {
+        font-size: 4rem !important;
+    }
+
+    .key-obj {
+        width: 70px !important;
+        height: 70px !important;
+    }
+
+    .key-top {
+        font-size: 0.8rem !important;
+    }
+}
+
+@media (orientation: portrait) and (max-width: 600px) {
+    body::after {
+        content: "PLEASE ROTATE FOR BATTLE";
+        position: fixed;
+        inset: 0;
+        background: #000;
+        z-index: 99999;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #f425af;
+        font-weight: 900;
+        letter-spacing: 0.2em;
+        font-size: 1.5rem;
+        padding: 40px;
+        text-align: center;
+    }
+}

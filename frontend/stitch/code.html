@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>VOID - Rhythm Menu</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#f425af",
+                        "background-light": "#f8f5f7",
+                        "background-dark": "#0d060c",
+                        "cyber-blue": "#00f0ff",
+                        "cyber-purple": "#7000ff",
+                    },
+                    fontFamily: {
+                        "display": ["Space Grotesk", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "2xl": "1rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style type="text/tailwindcss">
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.02);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        .song-card {
+            background: linear-gradient(90deg, rgba(255, 255, 255, 0.03) 0%, rgba(255, 255, 255, 0.01) 100%);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .song-card:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: var(--primary-color);
+            transform: translateX(10px);
+            box-shadow: -10px 0 20px rgba(244, 37, 175, 0.15);
+        }
+        .neon-text-glow {
+            text-shadow: 0 0 15px rgba(255, 255, 255, 0.4), 0 0 30px rgba(244, 37, 175, 0.3);
+        }
+        .cyber-bg {
+            background: 
+                radial-gradient(circle at 0% 0%, rgba(112, 0, 255, 0.2) 0%, transparent 50%),
+                radial-gradient(circle at 100% 100%, rgba(0, 240, 255, 0.2) 0%, transparent 50%),
+                radial-gradient(circle at 50% 50%, rgba(244, 37, 175, 0.05) 0%, transparent 70%);
+            background-color: #0d060c;
+        }
+        .scanlines::before {
+            content: " ";
+            display: block;
+            position: absolute;
+            top: 0; left: 0; bottom: 0; right: 0;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.15) 50%), 
+                        linear-gradient(90deg, rgba(255, 0, 0, 0.03), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.03));
+            z-index: 50;
+            background-size: 100% 2px, 3px 100%;
+            pointer-events: none;
+        }
+        ::-webkit-scrollbar {
+            width: 4px;
+        }
+        ::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.02);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(244, 37, 175, 0.3);
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #f425af;
+        }
+    </style>
+</head>
+<body class="bg-background-dark text-white font-display overflow-hidden h-screen w-screen selection:bg-primary selection:text-white">
+<div class="fixed inset-0 cyber-bg z-0"></div>
+<div class="fixed inset-0 scanlines pointer-events-none z-50"></div>
+<div class="relative z-10 w-full h-full flex flex-col">
+<header class="flex justify-between items-center px-8 py-6 bg-black/20 backdrop-blur-md border-b border-white/5">
+<div class="flex items-center gap-12">
+<h1 class="text-5xl font-black italic tracking-tighter neon-text-glow leading-none">VOID</h1>
+<div class="hidden md:flex items-center gap-4 border-l border-white/10 pl-12">
+<div class="relative">
+<img alt="Player Profile" class="w-10 h-10 rounded-full border border-white/20 object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAyFg5NfhQZzql8KaSxNBb6m7kwQWdlYlEhdkiOOYiRxiyMCCN2QEJ0TbPP0NcSpn6uTMVyLC_ZwDEvriRD7MmAXsitN3GLzvxIErIZDAsNTldu6__pAI2xpTH8dzmwJfX1ZlSp9I9fjPvtICX80GPWfrnqBZq9_0W7pfA7bDba2cnLbEbnT-Akltkx7AISWl0lF_hlEdp1njcuYckqmQf-gmh7cGup2khuMfxOGLfMX_VG0JcLDNCh2i103CqrlRkFNy2QQxGdf88"/>
+<div class="absolute -bottom-1 -right-1 bg-primary text-[8px] px-1.5 py-0.5 rounded-full font-bold">LV.42</div>
+</div>
+<div>
+<div class="text-xs font-bold tracking-widest text-white/50">NEONDRIFTER</div>
+<div class="h-1 w-24 bg-white/5 rounded-full mt-1 overflow-hidden">
+<div class="h-full bg-primary w-[75%]"></div>
+</div>
+</div>
+</div>
+</div>
+<div class="flex items-center gap-8">
+<div class="flex items-center gap-6 text-sm font-medium">
+<div class="flex items-center gap-2 text-primary">
+<span class="material-icons text-lg">bolt</span>
+<span class="font-bold">1,250</span>
+</div>
+<div class="flex items-center gap-2 text-cyber-blue">
+<span class="material-icons text-lg">diamond</span>
+<span class="font-bold">450</span>
+</div>
+</div>
+<div class="flex items-center gap-3">
+<button class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-white/5 transition-colors">
+<span class="material-icons text-white/50">settings</span>
+</button>
+<button class="w-10 h-10 flex items-center justify-center rounded-full bg-white/10 hover:bg-white/20 transition-colors">
+<span class="material-icons">menu</span>
+</button>
+</div>
+</div>
+</header>
+<main class="flex-1 flex overflow-hidden">
+<nav class="w-20 border-r border-white/5 flex flex-col items-center py-8 gap-10">
+<button class="text-primary"><span class="material-icons text-3xl">play_arrow</span></button>
+<button class="text-white/30 hover:text-white transition-colors"><span class="material-symbols-outlined text-3xl">favorite</span></button>
+<button class="text-white/30 hover:text-white transition-colors"><span class="material-symbols-outlined text-3xl">folder</span></button>
+<button class="text-white/30 hover:text-white transition-colors"><span class="material-symbols-outlined text-3xl">leaderboard</span></button>
+</nav>
+<section class="flex-1 overflow-y-auto px-8 py-10 space-y-4">
+<div class="max-w-6xl mx-auto space-y-4">
+<div class="song-card p-4 rounded-xl flex items-center gap-6 group cursor-pointer border-l-4 border-l-primary bg-white/5">
+<div class="relative w-32 h-20 bg-zinc-900 rounded-lg overflow-hidden shrink-0">
+<img alt="Cover" class="w-full h-full object-cover opacity-80 group-hover:scale-110 transition-transform duration-700" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAd9CHE47JC_pHTHeZR-VMDc47L8yCYFjcvi2FX-mPqP5UnzZ2o_SRjp-T0DMxBpwX66FBSood7b25AMP72BCSA4Mqxo9UCz_tZtbx_K8htuv1ra6h7oSluBU_VBpMqbvFBAURaZVJgOn52j9zoEO-bPTpbw_obe_BrcMDakAj7ALIYn8dJwuAZiRRt5HN4mtxuToh8fI6BeyBFDCe31nK4GTcrSpSwPlhXYcOrYwIh2LEfpZMHvwnnTlrKWX-zjZBQzas3HdFIWwo"/>
+<div class="absolute inset-0 flex items-center justify-center bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity">
+<span class="material-icons text-white text-4xl">play_circle_filled</span>
+</div>
+</div>
+<div class="flex-1">
+<h3 class="text-xl font-bold tracking-tight text-white group-hover:text-primary transition-colors uppercase">Stardust Overdrive</h3>
+<p class="text-sm text-white/40 font-medium">NEO-REBEL ft. LUNA</p>
+</div>
+<div class="hidden md:flex flex-col items-end gap-1 px-8 border-x border-white/5">
+<span class="text-[10px] text-white/30 tracking-widest font-bold">BPM</span>
+<span class="text-sm font-bold">174</span>
+</div>
+<div class="hidden lg:flex flex-col items-center gap-1 px-8">
+<span class="text-[10px] text-white/30 tracking-widest font-bold">DIFFICULTY</span>
+<div class="flex gap-1">
+<div class="w-4 h-1 bg-cyber-blue"></div>
+<div class="w-4 h-1 bg-cyber-blue"></div>
+<div class="w-4 h-1 bg-primary"></div>
+<div class="w-4 h-1 bg-primary"></div>
+<div class="w-4 h-1 bg-white/20"></div>
+</div>
+</div>
+<div class="text-right min-w-[100px]">
+<span class="text-xs text-white/40 block">BEST SCORE</span>
+<span class="text-xl font-black italic text-white">99.85%</span>
+</div>
+</div>
+<div class="song-card p-4 rounded-xl flex items-center gap-6 group cursor-pointer">
+<div class="relative w-32 h-20 bg-zinc-900 rounded-lg overflow-hidden shrink-0">
+<img alt="Cover" class="w-full h-full object-cover opacity-60 group-hover:scale-110 transition-transform duration-700" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD_YnBpuxg5_BpoyjqWa8An3zquzyEUpgD-1HXPwjEU2_T_hbm70vM_OzKOfhS6fbrM0aSal_0GehsUlyUGpjgCwX-v6n5OCiYivkX_elIv_GP74m0YGh1FTw2fGtBHWU2whx1c3PzWW0ze2p7bf0QqtbEcTIWyOvjN19MNzjspzSKeiuV-NUeWzWp1NK-al02XYHW4Y-K3_OGU51fj2XsUQz17LHQ1yNBIVi3fLYiVwFEXMjlZ0PuOeiZI8J8LuaOkl68O5h7AuA8"/>
+<div class="absolute inset-0 flex items-center justify-center bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity">
+<span class="material-icons text-white text-4xl">play_circle_filled</span>
+</div>
+</div>
+<div class="flex-1">
+<h3 class="text-xl font-bold tracking-tight text-white group-hover:text-primary transition-colors uppercase">Digital Horizon</h3>
+<p class="text-sm text-white/40 font-medium">SYNTH_WAVE_01</p>
+</div>
+<div class="hidden md:flex flex-col items-end gap-1 px-8 border-x border-white/5">
+<span class="text-[10px] text-white/30 tracking-widest font-bold">BPM</span>
+<span class="text-sm font-bold">128</span>
+</div>
+<div class="hidden lg:flex flex-col items-center gap-1 px-8">
+<span class="text-[10px] text-white/30 tracking-widest font-bold">DIFFICULTY</span>
+<div class="flex gap-1">
+<div class="w-4 h-1 bg-cyber-blue"></div>
+<div class="w-4 h-1 bg-cyber-blue"></div>
+<div class="w-4 h-1 bg-white/20"></div>
+<div class="w-4 h-1 bg-white/20"></div>
+<div class="w-4 h-1 bg-white/20"></div>
+</div>
+</div>
+<div class="text-right min-w-[100px]">
+<span class="text-xs text-white/40 block">BEST SCORE</span>
+<span class="text-xl font-black italic text-white/60">NEW</span>
+</div>
+</div>
+<div class="song-card p-4 rounded-xl flex items-center gap-6 group cursor-pointer">
+<div class="relative w-32 h-20 bg-zinc-900 rounded-lg overflow-hidden shrink-0">
+<img alt="Cover" class="w-full h-full object-cover opacity-60 group-hover:scale-110 transition-transform duration-700" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCAHkZeGJvDiwLtuA7Z0CO3uN5zXbVcs-mYB85MHkREBjpAMr7h9Z3MGORdLfvFFFYL4NBavuDZhpl_TUtS2LhNY-fGU4JUkMk5YcdVoWLODO1NfYXJmmWQ7yjyChV8lJjLzTDtRDlTTgCmFrY5gl_ieq9uMVLkXyk3klYZorQazE6T4uzkQjJuJr690rWYN1vQ-F1xIkoLmba2Fuih736xsF36vjhfnFRUXpwbKuKrSnFmu2SANEQ5ry2-VbVj3kp0PWEBJ2YzEKk"/>
+<div class="absolute inset-0 flex items-center justify-center bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity">
+<span class="material-icons text-white text-4xl">play_circle_filled</span>
+</div>
+</div>
+<div class="flex-1">
+<h3 class="text-xl font-bold tracking-tight text-white group-hover:text-primary transition-colors uppercase">Vaporized</h3>
+<p class="text-sm text-white/40 font-medium">CITY POP NIGHTS</p>
+</div>
+<div class="hidden md:flex flex-col items-end gap-1 px-8 border-x border-white/5">
+<span class="text-[10px] text-white/30 tracking-widest font-bold">BPM</span>
+<span class="text-sm font-bold">110</span>
+</div>
+<div class="hidden lg:flex flex-col items-center gap-1 px-8">
+<span class="text-[10px] text-white/30 tracking-widest font-bold">DIFFICULTY</span>
+<div class="flex gap-1">
+<div class="w-4 h-1 bg-cyber-blue"></div>
+<div class="w-4 h-1 bg-cyber-blue"></div>
+<div class="w-4 h-1 bg-cyber-blue"></div>
+<div class="w-4 h-1 bg-white/20"></div>
+<div class="w-4 h-1 bg-white/20"></div>
+</div>
+</div>
+<div class="text-right min-w-[100px]">
+<span class="text-xs text-white/40 block">BEST SCORE</span>
+<span class="text-xl font-black italic text-white">100.0%</span>
+</div>
+</div>
+<div class="song-card p-4 rounded-xl flex items-center gap-6 group cursor-pointer">
+<div class="relative w-32 h-20 bg-zinc-900 rounded-lg overflow-hidden shrink-0">
+<img alt="Cover" class="w-full h-full object-cover opacity-60 group-hover:scale-110 transition-transform duration-700" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAzWI2kouDZFY0jw7TQTCY19JS3PJv7iO_PYGDFsJeW1Z1qKRytKKFmI-51HXDbM6Y55qPz5Dn1otygBbFvpJgPzVFYgOS3owX7HUjVv8G_DEeMDZ5gnyoYw1QNzCdbcgB3ADSV8eweUhp9LAVvEoRwS-65mOOwyky9BeCls2RfY3bfvkPLV1dNbWGYIaXsZghw-PyYFQ4Ij3mosbgmr-JY5jnzlRNQfb9j6ArxAMKMdrTshoK92XfwpCD8p6hjyho4_CXIjfkfNuI"/>
+<div class="absolute inset-0 flex items-center justify-center bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity">
+<span class="material-icons text-white text-4xl">play_circle_filled</span>
+</div>
+</div>
+<div class="flex-1">
+<h3 class="text-xl font-bold tracking-tight text-white group-hover:text-primary transition-colors uppercase">Infinite Loop</h3>
+<p class="text-sm text-white/40 font-medium">CORE_SYS</p>
+</div>
+<div class="hidden md:flex flex-col items-end gap-1 px-8 border-x border-white/5">
+<span class="text-[10px] text-white/30 tracking-widest font-bold">BPM</span>
+<span class="text-sm font-bold">190</span>
+</div>
+<div class="hidden lg:flex flex-col items-center gap-1 px-8">
+<span class="text-[10px] text-white/30 tracking-widest font-bold">DIFFICULTY</span>
+<div class="flex gap-1">
+<div class="w-4 h-1 bg-cyber-blue"></div>
+<div class="w-4 h-1 bg-primary"></div>
+<div class="w-4 h-1 bg-primary"></div>
+<div class="w-4 h-1 bg-primary"></div>
+<div class="w-4 h-1 bg-primary"></div>
+</div>
+</div>
+<div class="text-right min-w-[100px]">
+<span class="text-xs text-white/40 block">BEST SCORE</span>
+<span class="text-xl font-black italic text-white/60">84.22%</span>
+</div>
+</div>
+<div class="song-card p-4 rounded-xl flex items-center gap-6 group cursor-pointer">
+<div class="relative w-32 h-20 bg-zinc-900 rounded-lg overflow-hidden shrink-0">
+<img alt="Cover" class="w-full h-full object-cover opacity-60 group-hover:scale-110 transition-transform duration-700" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAk_S6oKta6AU8SUt-iJp0cQBaVWZ4cmX8W2djHVHRNOmuNcxnZS7-VEwC2AZYp17c0VjtSlBEY0jprnnuOwg5C2LRtGGFySg5yMxsatiVY89EspwV64GMf8SXi20Xf2DdgG82Ie7IRYnTVFG6HeOGeokmmQxBE3_4RZIwz9-qI4YIKsdTlfoZNH438svhWDbBnZea57pAvpkYPPtrP5uRhHIweQRVFvl8CzU36igSWEkwNCu5pManQcJ0KdyLBRImvsKldNfJ5Yw0"/>
+<div class="absolute inset-0 flex items-center justify-center bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity">
+<span class="material-icons text-white text-4xl">play_circle_filled</span>
+</div>
+</div>
+<div class="flex-1">
+<h3 class="text-xl font-bold tracking-tight text-white group-hover:text-primary transition-colors uppercase">Neon Nights</h3>
+<p class="text-sm text-white/40 font-medium">TOKYO BEATS</p>
+</div>
+<div class="hidden md:flex flex-col items-end gap-1 px-8 border-x border-white/5">
+<span class="text-[10px] text-white/30 tracking-widest font-bold">BPM</span>
+<span class="text-sm font-bold">135</span>
+</div>
+<div class="hidden lg:flex flex-col items-center gap-1 px-8">
+<span class="text-[10px] text-white/30 tracking-widest font-bold">DIFFICULTY</span>
+<div class="flex gap-1">
+<div class="w-4 h-1 bg-cyber-blue"></div>
+<div class="w-4 h-1 bg-cyber-blue"></div>
+<div class="w-4 h-1 bg-cyber-blue"></div>
+<div class="w-4 h-1 bg-white/20"></div>
+<div class="w-4 h-1 bg-white/20"></div>
+</div>
+</div>
+<div class="text-right min-w-[100px]">
+<span class="text-xs text-white/40 block">BEST SCORE</span>
+<span class="text-xl font-black italic text-white">92.10%</span>
+</div>
+</div>
+</div>
+</section>
+</main>
+<footer class="h-10 bg-black/40 border-t border-white/5 px-8 flex items-center justify-between text-[10px] tracking-[0.2em] font-bold text-white/40">
+<div class="flex items-center gap-6">
+<span>SERVER: ONLINE</span>
+<span class="text-primary">ACTIVE EVENT: NEON CARNIVAL</span>
+</div>
+<div class="flex items-center gap-6 uppercase">
+<span>Build 2.4.0-rev_void</span>
+<span class="text-cyber-blue">Connected via Neural Link</span>
+</div>
+</footer>
+</div>
+
+</body></html>

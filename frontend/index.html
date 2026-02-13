@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>VOID - Main Menu</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+    <link rel="stylesheet" href="css/style.css">
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#f425af",
+                        "background-light": "#f8f5f7",
+                        "background-dark": "#0d060c",
+                        "cyber-blue": "#00f0ff",
+                        "cyber-purple": "#7000ff",
+                    },
+                    fontFamily: {
+                        "display": ["Space Grotesk", "sans-serif"]
+                    },
+                    borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "2xl": "1rem", "full": "9999px" },
+                },
+            },
+        }
+    </script>
+</head>
+
+<body
+    class="bg-background-dark text-white font-display overflow-hidden h-screen w-screen selection:bg-primary selection:text-white">
+    <div class="cyber-bg"></div>
+    <div class="scanlines"></div>
+
+    <!-- Decorative Glows -->
+    <div class="fixed top-[-10%] left-[-10%] w-[40%] h-[40%] bg-primary/10 blur-[120px] rounded-full animate-pulse z-0">
+    </div>
+    <div class="fixed bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-cyber-blue/10 blur-[120px] rounded-full animate-pulse z-0"
+        style="animation-delay: 1s;"></div>
+
+    <div class="relative z-10 w-full h-full flex flex-col">
+        <header
+            class="flex justify-between items-center px-8 py-6 bg-black/20 backdrop-blur-md border-b border-white/5">
+            <div class="flex items-center gap-12">
+                <h1 class="text-5xl font-black italic tracking-tighter neon-text-glow leading-none">VOID</h1>
+            </div>
+            <div class="flex items-center gap-8">
+                <div class="flex items-center gap-6 text-sm font-medium">
+                    <div class="flex items-center gap-2 text-primary">
+                        <span class="material-icons text-lg">bolt</span>
+                        <span class="font-bold">STATUS: READY</span>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <main class="flex-1 flex overflow-hidden">
+            <nav class="w-20 border-r border-white/5 flex flex-col items-center py-8 gap-10">
+                <button id="nav-play" class="text-primary"><span
+                        class="material-icons text-3xl">play_arrow</span></button>
+                <button id="nav-favorites" class="text-white/30 hover:text-white transition-colors"><span
+                        class="material-icons text-3xl">favorite</span></button>
+                <button id="nav-rankings" class="text-white/30 hover:text-white transition-colors"><span
+                        class="material-icons text-3xl">leaderboard</span></button>
+                <button id="nav-settings" class="text-white/30 hover:text-white transition-colors mt-auto"><span
+                        class="material-icons text-3xl">settings</span></button>
+            </nav>
+
+            <section class="flex-1 overflow-y-auto px-8 py-10">
+                <div id="song-list" class="max-w-6xl mx-auto space-y-4">
+                    <!-- Song items will be injected here -->
+                    <div class="flex justify-center items-center py-20">
+                        <div class="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary"></div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Dynamic Modals -->
+        <div id="modal-container" class="fixed inset-0 z-[100] hidden flex items-center justify-center p-4">
+            <div class="absolute inset-0 bg-black/80 backdrop-blur-sm" id="modal-overlay"></div>
+
+            <!-- Settings Modal -->
+            <div id="settings-modal"
+                class="relative bg-zinc-900 border border-white/10 w-full max-w-md rounded-2xl p-8 hidden animate-in fade-in zoom-in duration-200">
+                <h2 class="text-3xl font-black italic mb-8 uppercase tracking-tighter text-white">System Settings</h2>
+
+                <div class="space-y-6 max-h-[60vh] overflow-y-auto pr-2 custom-scrollbar">
+                    <!-- Note Speed -->
+                    <div>
+                        <label class="block text-[10px] font-bold uppercase tracking-widest text-white/40 mb-3">Note
+                            Speed</label>
+                        <input type="range" id="setting-speed" min="1" max="10" step="0.5" value="5"
+                            class="w-full accent-primary">
+                        <div class="flex justify-between mt-2 text-[10px] font-bold text-white/20">
+                            <span>SNAIL</span>
+                            <span id="speed-val" class="text-primary text-sm">5.0</span>
+                            <span>LIGHTSPEED</span>
+                        </div>
+                    </div>
+
+                    <!-- Background Dim -->
+                    <div>
+                        <label
+                            class="block text-[10px] font-bold uppercase tracking-widest text-white/40 mb-3">Background
+                            Dim</label>
+                        <input type="range" id="setting-dim" min="0" max="100" step="5" value="40"
+                            class="w-full accent-cyber-blue">
+                        <div class="flex justify-between mt-2 text-[10px] font-bold text-white/20">
+                            <span>BRIGHT</span>
+                            <span id="dim-val" class="text-cyber-blue text-sm">40%</span>
+                            <span>VOODOO</span>
+                        </div>
+                    </div>
+
+                    <!-- Audio Offset -->
+                    <div>
+                        <label class="block text-[10px] font-bold uppercase tracking-widest text-white/40 mb-3">Audio
+                            Sync (ms)</label>
+                        <div class="flex items-center gap-4">
+                            <input type="number" id="setting-offset" value="0"
+                                class="bg-black border border-white/10 rounded px-4 py-2 text-white font-bold w-full focus:border-primary focus:ring-0">
+                            <p class="text-[10px] text-white/20 uppercase tracking-tighter w-24">Positive = Delayed</p>
+                        </div>
+                    </div>
+
+                    <!-- Visual Effects Toggle -->
+                    <div class="flex items-center justify-between p-4 bg-white/5 rounded-xl border border-white/5">
+                        <div>
+                            <p class="text-xs font-bold text-white uppercase tracking-widest">Visual Particles</p>
+                            <p class="text-[9px] text-white/30 uppercase mt-1">Explosions & Screen Shake</p>
+                        </div>
+                        <label class="relative inline-flex items-center cursor-pointer">
+                            <input type="checkbox" id="setting-fx" class="sr-only peer" checked>
+                            <div
+                                class="w-11 h-6 bg-zinc-800 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary">
+                            </div>
+                        </label>
+                    </div>
+
+                    <!-- Dynamic Note Animation Toggle -->
+                    <div class="flex items-center justify-between p-4 bg-white/5 rounded-xl border border-white/5">
+                        <div>
+                            <p class="text-xs font-bold text-white uppercase tracking-widest">Dynamic Entry</p>
+                            <p class="text-[9px] text-white/30 uppercase mt-1">Notes fly in from the side</p>
+                        </div>
+                        <label class="relative inline-flex items-center cursor-pointer">
+                            <input type="checkbox" id="setting-dynamic-anim" class="sr-only peer" checked>
+                            <div
+                                class="w-11 h-6 bg-zinc-800 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-cyan-500">
+                            </div>
+                        </label>
+                    </div>
+
+                    <!-- Input Mapping -->
+                    <div>
+                        <label class="block text-[10px] font-bold uppercase tracking-widest text-white/40 mb-4">Input
+                            Mapping (4 Keys)</label>
+                        <div class="grid grid-cols-4 gap-2">
+                            <input type="text" id="key-0" maxlength="1"
+                                class="bg-black border border-white/10 rounded text-center text-xl font-bold p-2 text-white focus:border-primary uppercase">
+                            <input type="text" id="key-1" maxlength="1"
+                                class="bg-black border border-white/10 rounded text-center text-xl font-bold p-2 text-white focus:border-primary uppercase">
+                            <input type="text" id="key-2" maxlength="1"
+                                class="bg-black border border-white/10 rounded text-center text-xl font-bold p-2 text-white focus:border-primary uppercase">
+                            <input type="text" id="key-3" maxlength="1"
+                                class="bg-black border border-white/10 rounded text-center text-xl font-bold p-2 text-white focus:border-primary uppercase">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-12 flex gap-4">
+                    <button id="save-settings"
+                        class="flex-1 bg-white text-black font-black py-3 uppercase tracking-widest hover:bg-primary hover:text-white transition-all transform active:scale-95">Save
+                        Changes</button>
+                    <button onclick="closeModal()"
+                        class="px-6 py-3 border border-white/10 text-white font-bold uppercase tracking-widest hover:bg-white/5 transition-all">Close</button>
+                </div>
+            </div>
+
+            <!-- Rankings Modal -->
+            <div id="rankings-modal"
+                class="relative bg-zinc-900 border border-white/10 w-full max-w-2xl rounded-2xl overflow-hidden hidden animate-in fade-in zoom-in duration-200">
+                <div class="p-8 border-b border-white/5 flex justify-between items-center">
+                    <div>
+                        <h2 class="text-3xl font-black italic uppercase tracking-tighter text-white">Global Ranking</h2>
+                        <p id="ranking-song-title"
+                            class="text-primary text-xs font-bold uppercase tracking-widest mt-1">Select a song to view
+                            rankings</p>
+                    </div>
+                    <button onclick="closeModal()" class="text-white/40 hover:text-white transition-colors">
+                        <span class="material-icons">close</span>
+                    </button>
+                </div>
+                <div id="rank-list" class="max-h-[50vh] overflow-y-auto p-4 space-y-1">
+                    <!-- Rankings list -->
+                    <div class="text-center py-20 text-white/20 font-bold uppercase tracking-widest italic">Loading
+                        rankings...</div>
+                </div>
+            </div>
+        </div>
+
+        <footer
+            class="h-10 bg-black/40 border-t border-white/5 px-8 flex items-center justify-between text-[10px] tracking-[0.2em] font-bold text-white/40 uppercase">
+            <div class="flex items-center gap-6">
+                <span>SYSTEM: STABLE</span>
+                <span class="text-primary">CORE LOADED</span>
+            </div>
+            <div class="flex items-center gap-6">
+                <span class="text-cyber-blue">Project VOID v0.1</span>
+            </div>
+        </footer>
+    </div>
+
+    <script src="js/main.js?v=9"></script>
+</body>
+
+</html>

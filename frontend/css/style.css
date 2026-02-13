@@ -1,0 +1,204 @@
+:root {
+    --primary: #f425af;
+    --background-light: #f8f5f7;
+    --background-dark: #0d060c;
+    --cyber-blue: #00f0ff;
+    --cyber-purple: #7000ff;
+    --glass-white: rgba(255, 255, 255, 0.02);
+    --glass-border: rgba(255, 255, 255, 0.05);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: var(--background-dark);
+    color: white;
+    font-family: 'Space Grotesk', sans-serif;
+    overflow: hidden;
+    height: 100vh;
+    width: 100vw;
+}
+
+.cyber-bg {
+    position: fixed;
+    inset: 0;
+    background:
+        radial-gradient(circle at 0% 0%, rgba(112, 0, 255, 0.2) 0%, transparent 50%),
+        radial-gradient(circle at 100% 100%, rgba(0, 240, 255, 0.2) 0%, transparent 50%),
+        radial-gradient(circle at 50% 50%, rgba(244, 37, 175, 0.05) 0%, transparent 70%);
+    background-color: #0d060c;
+    z-index: -2;
+}
+
+.scanlines {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 50;
+    background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.15) 50%),
+        linear-gradient(90deg, rgba(255, 0, 0, 0.03), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.03));
+    background-size: 100% 2px, 3px 100%;
+}
+
+.glass-panel {
+    background: var(--glass-white);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--glass-border);
+}
+
+@keyframes float {
+    0% {
+        transform: translateY(0px) rotate(0deg);
+    }
+
+    50% {
+        transform: translateY(-10px) rotate(1deg);
+    }
+
+    100% {
+        transform: translateY(0px) rotate(0deg);
+    }
+}
+
+@keyframes pulse-glow {
+
+    0%,
+    100% {
+        opacity: 0.5;
+        filter: blur(40px);
+    }
+
+    50% {
+        opacity: 0.8;
+        filter: blur(60px);
+    }
+}
+
+.song-card {
+    background: linear-gradient(90deg, rgba(255, 255, 255, 0.03) 0%, rgba(255, 255, 255, 0.01) 100%);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: all 0.4s cubic-bezier(0.19, 1, 0.22, 1);
+    cursor: pointer;
+    border-radius: 12px;
+    padding: 1.25rem;
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    margin-bottom: 1.25rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.song-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg,
+            transparent,
+            rgba(255, 255, 255, 0.05),
+            transparent);
+    transition: 0.5s;
+}
+
+.song-card:hover::before {
+    left: 100%;
+}
+
+.song-card:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: var(--primary);
+    transform: translateX(15px) scale(1.02);
+    box-shadow: -20px 0 40px rgba(244, 37, 175, 0.2);
+}
+
+.neon-text-glow {
+    text-shadow: 0 0 10px rgba(244, 37, 175, 0.5), 0 0 20px rgba(244, 37, 175, 0.3);
+}
+
+.difficulty-badge {
+    padding: 4px 12px;
+    border-radius: 6px;
+    font-size: 0.7rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    box-shadow: 0 0 10px currentColor;
+}
+
+.diff-easy {
+    background: rgba(0, 240, 255, 0.2);
+    color: var(--cyber-blue);
+    border: 1px solid var(--cyber-blue);
+}
+
+.diff-hard {
+    background: rgba(244, 37, 175, 0.2);
+    color: var(--primary);
+    border: 1px solid var(--primary);
+}
+
+.status-glow {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: var(--primary);
+    box-shadow: 0 0 10px var(--primary);
+    animation: pulse-glow 2s infinite;
+}
+
+::-webkit-scrollbar {
+    width: 4px;
+}
+
+::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.02);
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgba(244, 37, 175, 0.3);
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--primary);
+}
+
+/* Mobile Adjustments */
+@media (max-width: 768px) {
+    header h1 {
+        font-size: 2.5rem !important;
+    }
+
+    .song-card {
+        gap: 1rem !important;
+        padding: 1rem !important;
+        margin-bottom: 0.75rem !important;
+    }
+
+    .song-card .w-40 {
+        width: 80px !important;
+        height: 60px !important;
+    }
+
+    .song-card h3 {
+        font-size: 1rem !important;
+    }
+
+    .song-card p {
+        font-size: 0.75rem !important;
+    }
+
+    header div.flex.items-center.gap-12 {
+        gap: 1.5rem !important;
+    }
+}
